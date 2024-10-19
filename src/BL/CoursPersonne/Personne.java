@@ -85,6 +85,7 @@ public class Personne {
 
     @Override
     public String toString() {
-        return this.nom + " " + this.prenom + " " + this.status.getStatus();
+        if (this.status == null) return this.nom + " " + this.prenom;
+        else return this.nom + " " + this.prenom + " : " + this.status.getStatus();
     }
 }

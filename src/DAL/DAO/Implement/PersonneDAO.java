@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import org.postgresql.util.PSQLException;
 import BL.CoursPersonne.Personne;
+import BL.Status.Status;
 
 public class PersonneDAO extends DAO<Personne> {
 
@@ -17,11 +18,11 @@ public class PersonneDAO extends DAO<Personne> {
     public Personne get(int id) {
         Personne p = null;
         try {
-            ps = single.getConnection().prepareStatement("SELECT id, id_status, nom, prenom FROM Personne WHERE id = ?;");
+            ps = single.getConnection().prepareStatement("SELECT id_status, nom, prenom FROM Personne WHERE id = ?;");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"));
+                p = new Personne(id, rs.getString("nom"), rs.getString("prenom"), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,7 +41,7 @@ public class PersonneDAO extends DAO<Personne> {
             ps.setString(2, obj.getPrenom());
             rs = ps.executeQuery();
             if (rs.next()) {
-                p = new Personne(rs.getInt("id"), obj.getNom(), obj.getPrenom());
+                p = new Personne(rs.getInt("id"), obj.getNom(), obj.getPrenom(), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,7 +59,9 @@ public class PersonneDAO extends DAO<Personne> {
             rs = ps.executeQuery();
             personneList = new ArrayList<>();
             while (rs.next()) {
-                Personne p = new Personne(rs.getInt("id") ,rs.getString("nom"), rs.getString("prenom"), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
+                Personne p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"));
+                Status s = DAOFactory.getStatusDAO().get(rs.getInt("id_status"));
+                if (s != null) p.setStatus(s);
                 personneList.add(p);
             }
         } catch (SQLException e) {

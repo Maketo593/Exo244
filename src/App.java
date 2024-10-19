@@ -9,61 +9,40 @@ import DAL.Singleton.Singleton;
 public class App {
     public static void main(String[] args) throws Exception {
         Singleton.getInstance();
-        
-        // Creation des sections
-        Section sectionInfo = new Section("Informatique de gestion");
-        Section sectionDroit = new Section("Droit");
-        DAOFactory.getSectionDAO().create(sectionInfo);
-        DAOFactory.getSectionDAO().create(sectionDroit);
 
-        // Réattribution des sections
-        sectionInfo = DAOFactory.getSectionDAO().get(sectionInfo);
-        sectionDroit = DAOFactory.getSectionDAO().get(sectionDroit);
+        // Création des Status
+        Status statusEtudiant = new Status("Étudiant");
+        Status statusEnseignant = new Status("Charge de cours");
+        Status statusEmpAdmin = new Status("Employé administratif");
+        DAOFactory.getStatusDAO().create(statusEtudiant);
+        DAOFactory.getStatusDAO().create(statusEnseignant);
+        DAOFactory.getStatusDAO().create(statusEmpAdmin);
 
-        if (!sectionInfo.getCours().isEmpty()) {
-            System.out.println("La section " + sectionInfo.getNom() + " a des cours :");
-            for (Cours cours : sectionInfo.getCours()) {
-                System.out.println("cours : " + cours.getNom());
-            }
-        } else System.out.println("La section " + sectionInfo.getNom() + " n'a pas de cours");
+        // Recupération des Status
+        statusEtudiant = DAOFactory.getStatusDAO().get(statusEtudiant);
+        statusEnseignant = DAOFactory.getStatusDAO().get(statusEnseignant);
+        statusEmpAdmin = DAOFactory.getStatusDAO().get(statusEmpAdmin);
 
-        if (!sectionDroit.getCours().isEmpty()) {
-            System.out.println("La section " + sectionDroit.getNom() + " a des cours :");
-            for (Cours cours : sectionDroit.getCours()) {
-                System.out.println("cours : " + cours.getNom());
-            }
-        } else System.out.println("La section " + sectionDroit.getNom() + " n'a pas de cours");
+        // Création des Personnes
+        Personne p1 = new Personne("Poulet", "Gilles", statusEnseignant);
+        Personne p2 = new Personne("Godissart", "Emmanuel", statusEnseignant);
+        Personne p3 = new Personne("Lai", "Valeria", statusEmpAdmin);
+        Personne p4 = new Personne("Mairesse", "David", statusEmpAdmin);
+        Personne p5 = new Personne("Durant", "Richard", statusEtudiant);
+        Personne p6 = new Personne("Ortiz", "Valerie", statusEtudiant);
+        DAOFactory.getPersonneDAO().create(p1);
+        DAOFactory.getPersonneDAO().create(p2);
+        DAOFactory.getPersonneDAO().create(p3);
+        DAOFactory.getPersonneDAO().create(p4);
+        DAOFactory.getPersonneDAO().create(p5);
+        DAOFactory.getPersonneDAO().create(p6);
 
-        // Creation des cours
-        Cours coursReseaux = new Cours("Base de Réseaux", sectionInfo);
-        Cours coursOS = new Cours("Systèmes d'exploitation", sectionInfo);
-        Cours coursPOO = new Cours("Programmation orientée objet", sectionInfo);
-        Cours coursDCivil = new Cours("Droit civil", sectionDroit);
-        Cours coursDCommercial = new Cours("Droit commercial", sectionDroit);
+        DAOFactory.getStatusDAO().delete(1);
 
-        DAOFactory.getCoursDAO().create(coursReseaux);
-        DAOFactory.getCoursDAO().create(coursOS);
-        DAOFactory.getCoursDAO().create(coursPOO);
-        DAOFactory.getCoursDAO().create(coursDCivil);
-        DAOFactory.getCoursDAO().create(coursDCommercial);
-
-        sectionInfo = DAOFactory.getSectionDAO().get(sectionInfo);
-        sectionDroit = DAOFactory.getSectionDAO().get(sectionDroit);
-
-        // Affichage des sections après intégration des
-        if (!sectionInfo.getCours().isEmpty()) {
-            System.out.println("La section " + sectionInfo.getNom() + " a des cours :");
-            for (Cours cours : sectionInfo.getCours()) {
-                System.out.println("cours : " + cours.getNom());
-            }
-        } else System.out.println("La section " + sectionInfo.getNom() + " n'a pas de cours");
-
-        if (!sectionDroit.getCours().isEmpty()) {
-            System.out.println("La section " + sectionDroit.getNom() + " a des cours :");
-            for (Cours cours : sectionDroit.getCours()) {
-                System.out.println("cours : " + cours.getNom());
-            }
-        } else System.out.println("La section " + sectionDroit.getNom() + " n'a pas de cours");
+        // Recupération des Personnes
+        for (Personne p : DAOFactory.getPersonneDAO().getAll()) {
+            System.out.println(p.toString());
+        }
 
         Singleton.getInstance().close();
     }
