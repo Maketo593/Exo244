@@ -83,6 +83,7 @@ public class CoursDAO extends DAO<Cours> {
             coursList = new ArrayList<>();
             while (rs.next()) {
                 Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
+                cours.setSection(obj);
                 coursList.add(cours);
             }
         } catch (SQLException e) {

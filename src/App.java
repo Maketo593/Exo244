@@ -16,23 +16,23 @@ public class App {
         DAOFactory.getSectionDAO().create(sectionInfo);
         DAOFactory.getSectionDAO().create(sectionDroit);
 
-        if (sectionInfo.getCours() != null) {
+        // Réattribution des sections
+        sectionInfo = DAOFactory.getSectionDAO().get(sectionInfo);
+        sectionDroit = DAOFactory.getSectionDAO().get(sectionDroit);
+
+        if (!sectionInfo.getCours().isEmpty()) {
             System.out.println("La section " + sectionInfo.getNom() + " a des cours :");
             for (Cours cours : sectionInfo.getCours()) {
                 System.out.println("cours : " + cours.getNom());
             }
-        } else {
-            System.out.println("La section " + sectionInfo.getNom() + " n'a pas de cours");
-        }
+        } else System.out.println("La section " + sectionInfo.getNom() + " n'a pas de cours");
 
-        if (sectionDroit.getCours() != null) {
+        if (!sectionDroit.getCours().isEmpty()) {
             System.out.println("La section " + sectionDroit.getNom() + " a des cours :");
             for (Cours cours : sectionDroit.getCours()) {
                 System.out.println("cours : " + cours.getNom());
             }
-        } else {
-            System.out.println("La section " + sectionDroit.getNom() + " n'a pas de cours");
-        }
+        } else System.out.println("La section " + sectionDroit.getNom() + " n'a pas de cours");
 
         // Creation des cours
         Cours coursReseaux = new Cours("Base de Réseaux", sectionInfo);
@@ -46,6 +46,24 @@ public class App {
         DAOFactory.getCoursDAO().create(coursPOO);
         DAOFactory.getCoursDAO().create(coursDCivil);
         DAOFactory.getCoursDAO().create(coursDCommercial);
+
+        sectionInfo = DAOFactory.getSectionDAO().get(sectionInfo);
+        sectionDroit = DAOFactory.getSectionDAO().get(sectionDroit);
+
+        // Affichage des sections après intégration des
+        if (!sectionInfo.getCours().isEmpty()) {
+            System.out.println("La section " + sectionInfo.getNom() + " a des cours :");
+            for (Cours cours : sectionInfo.getCours()) {
+                System.out.println("cours : " + cours.getNom());
+            }
+        } else System.out.println("La section " + sectionInfo.getNom() + " n'a pas de cours");
+
+        if (!sectionDroit.getCours().isEmpty()) {
+            System.out.println("La section " + sectionDroit.getNom() + " a des cours :");
+            for (Cours cours : sectionDroit.getCours()) {
+                System.out.println("cours : " + cours.getNom());
+            }
+        } else System.out.println("La section " + sectionDroit.getNom() + " n'a pas de cours");
 
         Singleton.getInstance().close();
     }
