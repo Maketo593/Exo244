@@ -2,7 +2,6 @@ package BL.CoursPersonne;
 import java.util.ArrayList;
 import BL.Section.Section;
 
-
 public class Cours {
     private int id;
     private String nom;

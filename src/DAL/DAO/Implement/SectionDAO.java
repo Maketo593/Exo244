@@ -1,6 +1,7 @@
 package DAL.DAO.Implement;
 import BL.Section.Section;
 import DAL.DAO.DAO;
+import DAL.DAO.DAOFactory;
 import DAL.Singleton.Singleton;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class SectionDAO extends DAO<Section> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 section = new Section(id, rs.getString("nom"));
+                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,6 +42,7 @@ public class SectionDAO extends DAO<Section> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 section = new Section(rs.getInt("id"), obj.getNom());
+                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -51,13 +54,15 @@ public class SectionDAO extends DAO<Section> {
 
     @Override
     public List<Section> getAll() {
-        ArrayList<Section> sectionList = new ArrayList<>();
+        ArrayList<Section> sectionList = null;
         try {
             ps = single.getConnection().prepareStatement("SELECT id, nom FROM Section;");
             rs = ps.executeQuery();
+            sectionList = new ArrayList<>();
             while (rs.next()) {
                 Section section = new Section(rs.getInt("id"), rs.getString("nom"));
                 sectionList.add(section);
+                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
             }
         } catch (SQLException e) {
             e.printStackTrace();
