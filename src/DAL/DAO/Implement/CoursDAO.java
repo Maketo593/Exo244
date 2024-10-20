@@ -139,6 +139,25 @@ public class CoursDAO extends DAO<Cours> {
         return flag;
     }
 
+    public boolean addPersonne(Personne personne, Cours cours) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("INSERT INTO Cours_Personne (id_personne, id_cours, annee) VALUES (?, ?, ?) ON CONFLICT (id_personne, id_cours, annee) DO NOTHING;");
+            ps.setInt(1, personne.getId());
+            ps.setInt(2, cours.getId());
+            ps.setInt(3, cours.getAnnee());
+            ps.executeUpdate();
+            flag = true;
+        } catch (PSQLException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
+    }
+
     @Override
     public boolean update(Cours obj) {
         boolean flag = false;
@@ -159,12 +178,49 @@ public class CoursDAO extends DAO<Cours> {
         return flag;
     }
 
+    public boolean updateAnnee(Cours obj) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("UPDATE Cours_Personne SET annee = ? WHERE id_cours = ?;");
+            ps.setInt(1, obj.getAnnee());
+            ps.setInt(2, obj.getId());
+            ps.executeUpdate();
+            flag = true;
+        } catch (PSQLException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
+    }
+
     @Override
     public boolean delete(int id) {
         boolean flag = false;
         try {
             ps = single.getConnection().prepareStatement("DELETE FROM Cours WHERE id = ?;");
             ps.setInt(1, id);
+            ps.executeUpdate();
+            flag = true;
+        } catch (PSQLException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
+    }
+
+    public boolean removePersonne(Personne personne, Cours cours) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("DELETE FROM Cours_Personne WHERE id_personne = ? AND id_cours = ? AND annee = ?;");
+            ps.setInt(1, personne.getId());
+            ps.setInt(2, cours.getId());
+            ps.setInt(3, cours.getAnnee());
             ps.executeUpdate();
             flag = true;
         } catch (PSQLException e) {

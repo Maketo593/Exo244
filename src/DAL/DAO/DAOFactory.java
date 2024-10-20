@@ -1,6 +1,5 @@
 package DAL.DAO;
 import DAL.DAO.Implement.CoursDAO;
-import DAL.DAO.Implement.CoursPersonneDAO;
 import DAL.DAO.Implement.PersonneDAO;
 import DAL.DAO.Implement.SectionDAO;
 import DAL.DAO.Implement.StatusDAO;
@@ -23,9 +22,5 @@ public class DAOFactory {
 
     public static CoursDAO getCoursDAO() {
         return new CoursDAO(single);
-    }
-
-    public static CoursPersonneDAO getCoursPersonneDAO() {
-        return new CoursPersonneDAO(single);
     }
 }

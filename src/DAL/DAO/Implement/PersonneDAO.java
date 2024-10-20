@@ -117,6 +117,25 @@ public class PersonneDAO extends DAO<Personne> {
         return flag;
     }
 
+    public boolean addCours(Personne personne, Cours cours) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("INSERT INTO Cours_Personne (id_personne, id_cours, annee) VALUES (?, ?, ?) ON CONFLICT (id_personne, id_cours, annee) DO NOTHING;");
+            ps.setInt(1, personne.getId());
+            ps.setInt(2, cours.getId());
+            ps.setInt(3, cours.getAnnee());
+            ps.executeUpdate();
+            flag = true;
+        } catch (PSQLException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
+    }
+
     @Override
     public boolean update(Personne obj) {
         boolean flag = false;

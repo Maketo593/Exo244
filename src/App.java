@@ -1,5 +1,4 @@
 import BL.CoursPersonne.Cours;
-import BL.CoursPersonne.CoursPersonne;
 import BL.CoursPersonne.Personne;
 import BL.Section.Section;
 import BL.Status.Status;
