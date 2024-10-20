@@ -10,11 +10,13 @@ public class Section {
 
     public Section(String nom) {
         this.nom = nom;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public Section(int id, String nom) {
         this.id = id;
         this.nom = nom;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public int getId() {

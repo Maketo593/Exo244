@@ -24,8 +24,7 @@ public class CoursDAO extends DAO<Cours> {
             ps.setInt(1, id);
             rs = ps.executeQuery();
             if (rs.next()) {
-                cours = new Cours(id, rs.getString("nom"));
-                cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                cours = new Cours(id, rs.getString("nom"), DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
                 DAOFactory.getPersonneDAO().getAllbyCours(cours);
             }
         } catch (SQLException e) {
@@ -44,8 +43,7 @@ public class CoursDAO extends DAO<Cours> {
             ps.setString(1, obj.getNom());
             rs = ps.executeQuery();
             if (rs.next()) {
-                cours = new Cours(rs.getInt("id"), obj.getNom());
-                cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                cours = new Cours(rs.getInt("id"), obj.getNom(), DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
                 DAOFactory.getPersonneDAO().getAllbyCours(cours);
             }
         } catch (SQLException e) {
@@ -64,8 +62,7 @@ public class CoursDAO extends DAO<Cours> {
             rs = ps.executeQuery();
             coursList = new ArrayList<>();
             while (rs.next()) {
-                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
-                cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"), DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
                 DAOFactory.getPersonneDAO().getAllbyCours(cours);
                 coursList.add(cours);
             }
@@ -84,8 +81,7 @@ public class CoursDAO extends DAO<Cours> {
             ps.setInt(1, obj.getId());
             rs = ps.executeQuery();
             while (rs.next()) {
-                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
-                cours.setSection(obj);
+                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"), obj);
                 DAOFactory.getPersonneDAO().getAllbyCours(cours);
                 obj.addCours(cours);
                 flag = true;
@@ -105,10 +101,8 @@ public class CoursDAO extends DAO<Cours> {
             ps.setInt(1, obj.getId());
             rs = ps.executeQuery();
             while (rs.next()) {
-                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
+                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"), DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
                 cours.setAnnee(rs.getInt("annee"));
-                Section section = DAOFactory.getSectionDAO().get(rs.getInt("id_section"));
-                if (section != null) cours.setSection(section);
                 obj.addCours(cours);
                 flag = true;
             }

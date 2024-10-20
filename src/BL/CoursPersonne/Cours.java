@@ -10,15 +10,10 @@ public class Cours {
     private Personne prof;
     private ArrayList<Personne> personneList;
 
-    public Cours(int id, String nom) {
-        this.id = id;
-        this.nom = nom;
-        this.personneList = new ArrayList<>();
-    }
-
     public Cours(String nom, Section section) {
         this.nom = nom;
         this.section = section;
+        section.addCours(this);
         this.personneList = new ArrayList<>();
     }
 

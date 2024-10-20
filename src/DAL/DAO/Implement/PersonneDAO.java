@@ -25,6 +25,7 @@ public class PersonneDAO extends DAO<Personne> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 p = new Personne(id, rs.getString("nom"), rs.getString("prenom"), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
+                DAOFactory.getCoursDAO().getAllbyPersonne(p);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -44,6 +45,7 @@ public class PersonneDAO extends DAO<Personne> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 p = new Personne(rs.getInt("id"), obj.getNom(), obj.getPrenom(), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
+                DAOFactory.getCoursDAO().getAllbyPersonne(p);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,9 +63,7 @@ public class PersonneDAO extends DAO<Personne> {
             rs = ps.executeQuery();
             personneList = new ArrayList<>();
             while (rs.next()) {
-                Personne p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"));
-                Status s = DAOFactory.getStatusDAO().get(rs.getInt("id_status"));
-                if (s != null) p.setStatus(s);
+                Personne p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"), DAOFactory.getStatusDAO().get(rs.getInt("id_status")));
                 personneList.add(p);
             }
         } catch (SQLException e) {
@@ -77,16 +77,21 @@ public class PersonneDAO extends DAO<Personne> {
     public boolean getAllbyCours(Cours obj) {
         boolean flag = false;
         try {
-            ps = single.getConnection().prepareStatement("SELECT p.id, p.nom, p.prenom, s.status, cp.annee FROM Cours_Personne cp INNER JOIN Personne p ON cp.id_personne = p.id INNER JOIN Status s ON p.id_status = s.id WHERE cp.id_cours = ?;");
+            ps = single.getConnection().prepareStatement("SELECT p.id, p.nom, p.prenom, s.id AS statusID, cp.annee FROM Cours_Personne cp INNER JOIN Personne p ON cp.id_personne = p.id INNER JOIN Status s ON p.id_status = s.id WHERE cp.id_cours = ?;");
             ps.setInt(1, obj.getId());
             rs = ps.executeQuery();
             while (rs.next()) {
                 obj.setAnnee(rs.getInt("annee"));
                 Personne p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"));
-                Status s = DAOFactory.getStatusDAO().get(rs.getInt("id_status"));
-                if (s != null) p.setStatus(s);
-                if (p.getStatus().getStatus().equals("Charge de cours")) obj.setProf(p);
-                else obj.addPersonne(p);
+                if (flag) {
+                    
+                }
+                Status s = DAOFactory.getStatusDAO().get(rs.getInt("statusID"));
+                if (s != null) {
+                    p.setStatus(s);
+                    if (p.getStatus().getStatus().equals("Charge de cours")) obj.setProf(p);
+                    else obj.addPersonne(p);
+                }
                 flag = true;
             }
         } catch (SQLException e) {
@@ -105,25 +110,6 @@ public class PersonneDAO extends DAO<Personne> {
             ps.setInt(1, obj.getStatus().getId());
             ps.setString(2, obj.getNom());
             ps.setString(3, obj.getPrenom());            
-            ps.executeUpdate();
-            flag = true;
-        } catch (PSQLException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            close();
-        }
-        return flag;
-    }
-
-    public boolean addCours(Personne personne, Cours cours) {
-        boolean flag = false;
-        try {
-            ps = single.getConnection().prepareStatement("INSERT INTO Cours_Personne (id_personne, id_cours, annee) VALUES (?, ?, ?) ON CONFLICT (id_personne, id_cours, annee) DO NOTHING;");
-            ps.setInt(1, personne.getId());
-            ps.setInt(2, cours.getId());
-            ps.setInt(3, cours.getAnnee());
             ps.executeUpdate();
             flag = true;
         } catch (PSQLException e) {
