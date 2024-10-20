@@ -75,11 +75,10 @@ public class Cours {
     }
 
     public void setProf(Personne prof) {
-        if (this.prof != null) {
-            this.prof.removeCours(this);
-        }
+        if (this.prof == prof) return;
+        if (this.prof != null) this.prof.removeCours(this);
         this.prof = prof;
-        this.prof.addCours(this);
+        if (prof != null && !prof.getCoursList().contains(this)) prof.addCours(this);
     }
 
     public ArrayList<Personne> getpersonneList() {
@@ -91,9 +90,10 @@ public class Cours {
     }
 
     public void addPersonne(Personne p) {
-        if (this.personneList != null && !this.personneList.contains(p)) {
+        if (this.personneList == null) this.personneList = new ArrayList<>();
+        if (!this.personneList.contains(p) && !p.getStatus().getStatus().equals("Charge de cours")) {
             this.personneList.add(p);
-            p.addCours(this);
+            if (!p.getCoursList().contains(this)) p.addCours(this);
         }
     }
 

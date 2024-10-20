@@ -12,18 +12,21 @@ public class Personne {
     public Personne(String nom, String prenom) {
         this.nom = nom;
         this.prenom = prenom;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public Personne(int id, String nom, String prenom) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public Personne(String nom, String prenom, Status status) {
         this.nom = nom;
         this.prenom = prenom;
         this.status = status;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public Personne(int id, String nom, String prenom, Status status) {
@@ -31,6 +34,7 @@ public class Personne {
         this.nom = nom;
         this.prenom = prenom;
         this.status = status;
+        this.coursList = new ArrayList<Cours>();
     }
 
     public int getId() {
@@ -73,14 +77,20 @@ public class Personne {
         this.coursList = coursList;
     }
 
+
     public void addCours(Cours cours) {
-        if (this.coursList != null && !this.coursList.contains(cours)) this.coursList.add(cours);
+        if (this.coursList == null) this.coursList = new ArrayList<>();
+        if (this.coursList.contains(cours)) return;
+        this.coursList.add(cours);
+        if (this.status.getStatus().equals("Charge de cours")) {
+            if (cours.getProf() != this) cours.setProf(this);
+        } else cours.addPersonne(this);
     }
 
     public void removeCours(Cours cours) {
-        if (this.coursList != null && this.coursList.contains(cours)) {
-            if (this.status.getStatus().equals("Charge de cours")) this.coursList.remove(cours);
-        }
+        if (this.coursList == null || !this.coursList.contains(cours)) return;
+        if (this.coursList != null && this.coursList.contains(cours)) this.coursList.remove(cours);
+        if (cours.getProf() == this) cours.setProf(null);
     }
 
     @Override
