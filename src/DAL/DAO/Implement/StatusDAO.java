@@ -35,11 +35,11 @@ public class StatusDAO extends DAO<Status> {
     public Status get(Status obj) {
         Status status = null;
         try {
-            ps = single.getConnection().prepareStatement("SELECT id, status FROM Status WHERE status = ?;");
+            ps = single.getConnection().prepareStatement("SELECT id FROM Status WHERE status = ?;");
             ps.setString(1, obj.getStatus());
             rs = ps.executeQuery();
             if (rs.next()) {
-                status = new Status(rs.getInt("id"), rs.getString("status"));
+                status = new Status(rs.getInt("id"), obj.getStatus());
             }
         } catch (SQLException e) {
             e.printStackTrace();

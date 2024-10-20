@@ -22,12 +22,8 @@ public abstract class DAO<T> {
     public abstract boolean delete(int id);
     protected void close() {
         try {
-            if (this.rs != null) {
-                rs.close();
-            }
-            if (this.ps != null) {
-                ps.close();
-            }
+            if (this.rs != null) rs.close();
+            if (this.ps != null) ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -1,12 +1,12 @@
 package DAL.DAO.Implement;
 import BL.CoursPersonne.Cours;
+import BL.CoursPersonne.Personne;
 import BL.Section.Section;
 import DAL.DAO.DAO;
 import DAL.DAO.DAOFactory;
 import DAL.Singleton.Singleton;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import org.postgresql.util.PSQLException;
 
 public class CoursDAO extends DAO<Cours> {
@@ -26,6 +26,7 @@ public class CoursDAO extends DAO<Cours> {
             if (rs.next()) {
                 cours = new Cours(id, rs.getString("nom"));
                 cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                DAOFactory.getPersonneDAO().getAllbyCours(cours);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,6 +46,7 @@ public class CoursDAO extends DAO<Cours> {
             if (rs.next()) {
                 cours = new Cours(rs.getInt("id"), obj.getNom());
                 cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                DAOFactory.getPersonneDAO().getAllbyCours(cours);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,6 +66,7 @@ public class CoursDAO extends DAO<Cours> {
             while (rs.next()) {
                 Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
                 cours.setSection(DAOFactory.getSectionDAO().get(rs.getInt("id_section")));
+                DAOFactory.getPersonneDAO().getAllbyCours(cours);
                 coursList.add(cours);
             }
         } catch (SQLException e) {
@@ -74,24 +77,47 @@ public class CoursDAO extends DAO<Cours> {
         return coursList;
     }
     
-    public ArrayList<Cours> getAllBySection(Section obj) {
-        ArrayList<Cours> coursList = null;
+    public boolean getAllBySection(Section obj) {
+        boolean flag = false;
         try {
             ps = single.getConnection().prepareStatement("SELECT id, nom FROM Cours WHERE id_section = ?;");
             ps.setInt(1, obj.getId());
             rs = ps.executeQuery();
-            coursList = new ArrayList<>();
             while (rs.next()) {
                 Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
                 cours.setSection(obj);
-                coursList.add(cours);
+                DAOFactory.getPersonneDAO().getAllbyCours(cours);
+                obj.addCours(cours);
+                flag = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             close();
         }
-        return coursList;
+        return flag;
+    }
+
+    public boolean getAllbyPersonne(Personne obj) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("SELECT p.id, p.nom, p.prenom, s.status, cp.annee, c.id_section FROM Cours_Personne cp INNER JOIN Cours c ON cp.id_cours = c.id INNER JOIN Personne p ON cp.id_personne = p.id INNER JOIN Status s ON p.id_status = s.id WHERE cp.id_personne = ?;");
+            ps.setInt(1, obj.getId());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Cours cours = new Cours(rs.getInt("id"), rs.getString("nom"));
+                cours.setAnnee(rs.getInt("annee"));
+                Section section = DAOFactory.getSectionDAO().get(rs.getInt("id_section"));
+                if (section != null) cours.setSection(section);
+                obj.addCours(cours);
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
     }
 
     @Override

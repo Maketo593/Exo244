@@ -23,7 +23,7 @@ public class SectionDAO extends DAO<Section> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 section = new Section(id, rs.getString("nom"));
-                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
+                DAOFactory.getCoursDAO().getAllBySection(section);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -42,7 +42,7 @@ public class SectionDAO extends DAO<Section> {
             rs = ps.executeQuery();
             if (rs.next()) {
                 section = new Section(rs.getInt("id"), obj.getNom());
-                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
+                DAOFactory.getCoursDAO().getAllBySection(section);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +62,7 @@ public class SectionDAO extends DAO<Section> {
             while (rs.next()) {
                 Section section = new Section(rs.getInt("id"), rs.getString("nom"));
                 sectionList.add(section);
-                section.setCours(DAOFactory.getCoursDAO().getAllBySection(section));
+                DAOFactory.getCoursDAO().getAllBySection(section);
             }
         } catch (SQLException e) {
             e.printStackTrace();

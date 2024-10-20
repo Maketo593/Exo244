@@ -13,17 +13,20 @@ public class Cours {
     public Cours(int id, String nom) {
         this.id = id;
         this.nom = nom;
+        this.personneList = new ArrayList<>();
     }
 
     public Cours(String nom, Section section) {
         this.nom = nom;
         this.section = section;
+        this.personneList = new ArrayList<>();
     }
 
     public Cours(int id, String nom, Section section) {
         this.id = id;
         this.nom = nom;
         this.section = section;
+        this.personneList = new ArrayList<>();
     }
 
     public Cours(int id, String nom, Section section, int annee, Personne prof, ArrayList<Personne> personneList) {

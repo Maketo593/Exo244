@@ -5,6 +5,8 @@ import DAL.Singleton.Singleton;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.postgresql.util.PSQLException;
+
+import BL.CoursPersonne.Cours;
 import BL.CoursPersonne.Personne;
 import BL.Status.Status;
 
@@ -70,6 +72,29 @@ public class PersonneDAO extends DAO<Personne> {
             close();
         }
         return personneList;
+    }
+
+    public boolean getAllbyCours(Cours obj) {
+        boolean flag = false;
+        try {
+            ps = single.getConnection().prepareStatement("SELECT p.id, p.nom, p.prenom, s.status, cp.annee FROM Cours_Personne cp INNER JOIN Personne p ON cp.id_personne = p.id INNER JOIN Status s ON p.id_status = s.id WHERE cp.id_cours = ?;");
+            ps.setInt(1, obj.getId());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                obj.setAnnee(rs.getInt("annee"));
+                Personne p = new Personne(rs.getInt("id"), rs.getString("nom"), rs.getString("prenom"));
+                Status s = DAOFactory.getStatusDAO().get(rs.getInt("id_status"));
+                if (s != null) p.setStatus(s);
+                if (p.getStatus().getStatus().equals("Charge de cours")) obj.setProf(p);
+                else obj.addPersonne(p);
+                flag = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            close();
+        }
+        return flag;
     }
 
     @Override
