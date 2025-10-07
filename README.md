@@ -7,4 +7,4 @@ Application de l’exercice sur le crud page 42 du cours SGBD fait par <Casu-Mat
 - Base de donnée Postgresql Vers. 17 ou supérieure
 - PostgreSQL JDBC Driver 42.7.8
 # Installation:
-git clone
+git clone https://github.com/Maketo593/Exo244.git
