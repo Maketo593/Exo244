@@ -15,11 +15,11 @@ public class SectionDAO extends DAO<Section> {
     public Section find(int id) {
         Section section = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT name FROM Section WHERE id = ?;");
+            pstmt = single.getConnection().prepareStatement("SELECT nom FROM Section WHERE id = ?;");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                section = new Section(id, rs.getString("name"));
+                section = new Section(id, rs.getString("nom"));
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,11 +33,11 @@ public class SectionDAO extends DAO<Section> {
     public Section find(Section obj) {
         Section section = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT id, name FROM Section WHERE name = ?;");
+            pstmt = single.getConnection().prepareStatement("SELECT id, nom FROM Section WHERE nom = ?;");
             pstmt.setString(1, obj.getname());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                section = new Section(rs.getInt("id"), rs.getString("name"));
+                section = new Section(rs.getInt("id"), rs.getString("nom"));
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,10 +52,10 @@ public class SectionDAO extends DAO<Section> {
         ArrayList<Section> sectionsList = new ArrayList<>();
         Section section = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT id, name FROM Section;");
+            pstmt = single.getConnection().prepareStatement("SELECT id, nom FROM Section;");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                section = new Section(rs.getInt("id"), rs.getString("name"));
+                section = new Section(rs.getInt("id"), rs.getString("nom"));
                 sectionsList.add(section);
             }   
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class SectionDAO extends DAO<Section> {
     public boolean create(Section obj) {
         boolean flag = false;
         try {
-            pstmt = single.getConnection().prepareStatement("INSERT INTO Section (name) VALUES (?) ON CONFLICT (name) DO NOTHING;");
+            pstmt = single.getConnection().prepareStatement("INSERT INTO Section (nom) VALUES (?) ON CONFLICT (nom) DO NOTHING;");
             pstmt.setString(1, obj.getname());
             pstmt.executeUpdate();
             flag = true;
@@ -88,7 +88,7 @@ public class SectionDAO extends DAO<Section> {
     public boolean update(Section obj) {
         boolean flag = false;
         try {
-            pstmt = single.getConnection().prepareStatement("UPDATE Section SET name = ? WHERE id = ?;");
+            pstmt = single.getConnection().prepareStatement("UPDATE Section SET nom = ? WHERE id = ?;");
             pstmt.setString(1, obj.getname());
             pstmt.setInt(2, obj.getId());
             pstmt.executeUpdate();

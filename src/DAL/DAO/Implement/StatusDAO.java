@@ -15,11 +15,11 @@ public class StatusDAO extends DAO<Status> {
     public Status find(int id) {
         Status status = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT name FROM Status WHERE id = ?;");
+            pstmt = single.getConnection().prepareStatement("SELECT nom FROM Status WHERE id = ?;");
             pstmt.setInt(1, id);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                status = new Status(id, rs.getString("name"));
+                status = new Status(id, rs.getString("nom"));
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,11 +33,11 @@ public class StatusDAO extends DAO<Status> {
     public Status find(Status obj) {
         Status status = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT id, name FROM Status WHERE name = ?;");
+            pstmt = single.getConnection().prepareStatement("SELECT id, nom FROM Status WHERE nom = ?;");
             pstmt.setString(1, obj.getname());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                status = new Status(rs.getInt("id"), rs.getString("name"));
+                status = new Status(rs.getInt("id"), rs.getString("nom"));
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,10 +52,10 @@ public class StatusDAO extends DAO<Status> {
         ArrayList<Status> statusList = new ArrayList<>();
         Status status = null;
         try {
-            pstmt = single.getConnection().prepareStatement("SELECT id, name FROM Status;");
+            pstmt = single.getConnection().prepareStatement("SELECT id, nom FROM Status;");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                status = new Status(rs.getInt("id"), rs.getString("name"));
+                status = new Status(rs.getInt("id"), rs.getString("nom"));
                 statusList.add(status);
             }   
         } catch (SQLException e) {
@@ -70,7 +70,7 @@ public class StatusDAO extends DAO<Status> {
     public boolean create(Status obj) {
         boolean flag = false;
         try {
-            pstmt = single.getConnection().prepareStatement("INSERT INTO Status (name) VALUES (?) ON CONFLICT DO NOTHING;");
+            pstmt = single.getConnection().prepareStatement("INSERT INTO Status (nom) VALUES (?) ON CONFLICT DO NOTHING;");
             pstmt.setString(1, obj.getname());
             pstmt.executeUpdate();
             flag = true;
@@ -88,7 +88,7 @@ public class StatusDAO extends DAO<Status> {
     public boolean update(Status obj) {
         boolean flag = false;
         try {
-            pstmt = single.getConnection().prepareStatement("UPDATE Status SET name = ? WHERE id = ?;");
+            pstmt = single.getConnection().prepareStatement("UPDATE Status SET nom = ? WHERE id = ?;");
             pstmt.setString(1, obj.getname());
             pstmt.setInt(2, obj.getId());
             pstmt.executeUpdate();

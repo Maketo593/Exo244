@@ -2,12 +2,9 @@ import BL.Cours.Cours;
 import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
-import DAL.Singleton.Singleton;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        Singleton single = Singleton.getInstance();
-        
+    public static void main(String[] args) throws Exception {        
         // Création des sections
         Section sectionInfo = new Section(-1,"Informatique de gestion");
         Section sectionDroit = new Section(-1,"Droit");
