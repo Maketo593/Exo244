@@ -24,6 +24,9 @@ public class Seance {
     }
 
     public void setCours(Cours cours) {
+        if(!this.cours.equals(null)) {
+            this.cours.removeSeance(this);
+        }
         this.cours = cours;
     }
 
