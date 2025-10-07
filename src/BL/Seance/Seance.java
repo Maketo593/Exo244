@@ -33,6 +33,13 @@ public class Seance {
     public Local getLocal() {
         return this.local;
     }
+
+    public void setLocal(Local local) {
+        if(!this.local.equals(null)) {
+            this.local.removeSeance(this);
+        }
+        this.local = local;
+    }
     public Timestamp getDate() {
         return this.date;
     }
