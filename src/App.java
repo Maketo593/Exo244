@@ -1,4 +1,5 @@
 import BL.Cours.Cours;
+import BL.Local.Local;
 import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
@@ -59,5 +60,26 @@ public class App {
         System.out.println("[" + statusEtudiant.getId() +"] " + statusEtudiant.getname());
         System.out.println("[" + statusEnseignant.getId() +"] " + statusEnseignant.getname());
         System.out.println("[" + statusEmpAdmin.getId() +"] " + statusEmpAdmin.getname());
+
+        // Création des Locaux
+        Local local3023 = new Local(-1,"3023","HelHa","STD");
+        Local localPS02 = new Local(-1,"PS02","SLuc","INF");
+        Local local2066 = new Local(-1,"2066","HelHa","INF");
+        Local local3220 = new Local(-1,"3220","HelHa","STD");
+        // Insertion des Locaux dans la base de données
+        DAOFactory.getLocalDAO().create(local3023);
+        DAOFactory.getLocalDAO().create(localPS02);
+        DAOFactory.getLocalDAO().create(local2066);
+        DAOFactory.getLocalDAO().create(local3220);
+        // Récupération des Locaux depuis la base de données
+        local3023 = DAOFactory.getLocalDAO().find(local3023);
+        localPS02 = DAOFactory.getLocalDAO().find(localPS02);
+        local2066 = DAOFactory.getLocalDAO().find(local2066);
+        local3220 = DAOFactory.getLocalDAO().find(local3220);
+        // Affichage des Locaux
+        System.out.println("[" + local3023.getId() +"] " + local3023.getNumber() + " - " + local3023.getLocation() + " (" + local3023.getType() + ")");
+        System.out.println("[" + localPS02.getId() +"] " + localPS02.getNumber() + " - " + localPS02.getLocation() + " (" + localPS02.getType() + ")");
+        System.out.println("[" + local2066.getId() +"] " + local2066.getNumber() + " - " + local2066.getLocation() + " (" + local2066.getType() + ")");
+        System.out.println("[" + local3220.getId() +"] " + local3220.getNumber() + " - " + local3220.getLocation() + " (" + local3220.getType() + ")");
     }
 }

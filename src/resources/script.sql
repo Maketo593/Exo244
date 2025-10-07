@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS Local (
     id SERIAL PRIMARY KEY,
     numero VARCHAR(5),
     lieu VARCHAR(10),
-    "type" VARCHAR(3)
+    "type" VARCHAR(3),
+    CONSTRAINT unique_local UNIQUE (numero, lieu)
 );
 
 CREATE TABLE IF NOT EXISTS Personne (
@@ -29,5 +30,14 @@ CREATE TABLE IF NOT EXISTS Cours (
     id_section INTEGER,
     CONSTRAINT fk_cours_section FOREIGN KEY (id_section) REFERENCES Section(id) ON DELETE SET NULL,
     CONSTRAINT unique_cours_per_section UNIQUE (id_section, nom)
+);
+
+CREATE TABLE IF NOT EXISTS Seance (
+    id SERIAL PRIMARY KEY,
+    id_cours INTEGER,
+    id_local INTEGER,
+    date TIMESTAMP,
+    CONSTRAINT fk_seance_cours FOREIGN KEY (id_cours) REFERENCES Cours(id) ON DELETE SET NULL,
+    CONSTRAINT fk_seance_local FOREIGN KEY (id_local) REFERENCES Local(id) ON DELETE SET NULL
 );
 
