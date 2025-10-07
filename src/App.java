@@ -22,8 +22,9 @@ public class App {
         sectionDroit = DAOFactory.getSectionDAO().find(sectionDroit);
         // Affichage des sections
         System.out.println("Sections :");
-        System.out.println("[" + sectionInfo.getId() +"] " + sectionInfo.getname());
-        System.out.println("[" + sectionDroit.getId() +"] " + sectionDroit.getname());
+        for (Section section : DAOFactory.getSectionDAO().findAll()) {
+            System.out.println("[" + section.getId() +"] " + section.getname());  
+        }
 
         // Création des cours
         Cours coursRéseaux = new Cours(-1,"Base des réseaux",sectionInfo);
@@ -45,11 +46,9 @@ public class App {
         coursDroitcom = DAOFactory.getCoursDAO().find(coursDroitcom);
         // Affichage des cours
         System.out.println("Cours :");
-        System.out.println("[" + coursRéseaux.getId() +"] " + coursRéseaux.getname() + " - Section: " + coursRéseaux.getSection().getname());
-        System.out.println("[" + coursSysteme.getId() +"] " + coursSysteme.getname() + " - Section: " + coursSysteme.getSection().getname());
-        System.out.println("[" + coursPOO.getId() +"] " + coursPOO.getname() + " - Section: " + coursPOO.getSection().getname());
-        System.out.println("[" + coursDroitCivil.getId() +"] " + coursDroitCivil.getname() + " - Section: " + coursDroitCivil.getSection().getname());
-        System.out.println("[" + coursDroitcom.getId() +"] " + coursDroitcom.getname() + " - Section: " + coursDroitcom.getSection().getname());
+        for (Cours cours : DAOFactory.getCoursDAO().findAll()) {
+            System.out.println("[" + cours.getId() +"] " + cours.getname() + " - Section: " + cours.getSection().getname());
+        }
 
         // Création des Status
         Status statusEtudiant = new Status(-1,"Etudiant");
@@ -65,9 +64,9 @@ public class App {
         statusEmpAdmin = DAOFactory.getStatusDAO().find(statusEmpAdmin);
         // Affichage des Status
         System.out.println("Status :");
-        System.out.println("[" + statusEtudiant.getId() +"] " + statusEtudiant.getname());
-        System.out.println("[" + statusEnseignant.getId() +"] " + statusEnseignant.getname());
-        System.out.println("[" + statusEmpAdmin.getId() +"] " + statusEmpAdmin.getname());
+        for (Status status : DAOFactory.getStatusDAO().findAll()) {
+            System.out.println("[" + status.getId() +"] " + status.getname());
+        }
 
         // Création des Locaux
         Local local3023 = new Local(-1,"3023","HelHa","STD");
@@ -86,10 +85,9 @@ public class App {
         local3220 = DAOFactory.getLocalDAO().find(local3220);
         // Affichage des Locaux
         System.out.println("Locaux :");
-        System.out.println("[" + local3023.getId() +"] " + local3023.getNumber() + " - " + local3023.getLocation() + " (" + local3023.getType() + ")");
-        System.out.println("[" + localPS02.getId() +"] " + localPS02.getNumber() + " - " + localPS02.getLocation() + " (" + localPS02.getType() + ")");
-        System.out.println("[" + local2066.getId() +"] " + local2066.getNumber() + " - " + local2066.getLocation() + " (" + local2066.getType() + ")");
-        System.out.println("[" + local3220.getId() +"] " + local3220.getNumber() + " - " + local3220.getLocation() + " (" + local3220.getType() + ")");
+        for (Local local : DAOFactory.getLocalDAO().findAll()) {
+            System.out.println("[" + local.getId() +"] " + local.getNumber() + " - " + local.getLocation() + " (" + local.getType() + ")");
+        }
         
         // Création des Personnes
         Personne pouletGilles = new Personne(-1, "Gilles", "Poulet", statusEnseignant);
@@ -114,12 +112,9 @@ public class App {
         ortizValerie = DAOFactory.getPersonneDAO().find(ortizValerie);
         // Affichage des Personnes
         System.out.println("Personnes :");
-        System.out.println("[" + pouletGilles.getId() +"] " + pouletGilles.getLastName() + " " + pouletGilles.getFirstName() + " - " + pouletGilles.getStatus().getname());
-        System.out.println("[" + godissartEmmanuel.getId() +"] " + godissartEmmanuel.getLastName() + " " + godissartEmmanuel.getFirstName() + " - " + godissartEmmanuel.getStatus().getname());
-        System.out.println("[" + laiValeria.getId() +"] " + laiValeria.getLastName() + " " + laiValeria.getFirstName() + " - " + laiValeria.getStatus().getname());
-        System.out.println("[" + mairesseDavid.getId() +"] " + mairesseDavid.getLastName() + " " + mairesseDavid.getFirstName() + " - " + mairesseDavid.getStatus().getname());
-        System.out.println("[" + durantRichard.getId() +"] " + durantRichard.getLastName() + " " + durantRichard.getFirstName() + " - " + durantRichard.getStatus().getname());
-        System.out.println("[" + ortizValerie.getId() +"] " + ortizValerie.getLastName() + " " + ortizValerie.getFirstName() + " - " + ortizValerie.getStatus().getname());
+        for (Personne personne : DAOFactory.getPersonneDAO().findAll()) {
+            System.out.println("[" + personne.getId() +"] " + personne.getLastName() + " " + personne.getFirstName() + " - " + personne.getStatus().getname());
+        }
         
         // Création des séances
         Seance seance080925 = new Seance(-1, coursSysteme, local2066,Timestamp.valueOf("2025-09-08 18:00:00"));
@@ -144,13 +139,10 @@ public class App {
         seance230925 = DAOFactory.getSeanceDAO().find(seance230925);
         // Affichage des séances
         System.out.println("Séances :");
-        System.out.println("[" + seance080925.getId() +"] " + seance080925.getDate() + " - " + seance080925.getLocal().getNumber() + " - " + seance080925.getCours().getname());
-        System.out.println("[" + seance150925.getId() +"] " + seance150925.getDate() + " - " + seance150925.getLocal().getNumber() + " - " + seance150925.getCours().getname());
-        System.out.println("[" + seance220925.getId() +"] " + seance220925.getDate() + " - " + seance220925.getLocal().getNumber() + " - " + seance220925.getCours().getname());
-        System.out.println("[" + seance090925.getId() +"] " + seance090925.getDate() + " - " + seance090925.getLocal().getNumber() + " - " + seance090925.getCours().getname());
-        System.out.println("[" + seance160925.getId() +"] " + seance160925.getDate() + " - " + seance160925.getLocal().getNumber() + " - " + seance160925.getCours().getname());
-        System.out.println("[" + seance230925.getId() +"] " + seance230925.getDate() + " - " + seance230925.getLocal().getNumber() + " - " + seance230925.getCours().getname());
-
+        for (Seance seance : DAOFactory.getSeanceDAO().findAll()) {
+            System.out.println("[" + seance.getId() +"] " + seance.getDate() + " - " + seance.getLocal().getNumber() + " - " + seance.getCours().getname());
+        }
+        
         // Association des personnes aux séances
         SeancePersonne sp1 = new SeancePersonne(durantRichard, seance080925);
         SeancePersonne sp2 = new SeancePersonne(durantRichard, seance150925);
