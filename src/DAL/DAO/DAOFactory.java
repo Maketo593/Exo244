@@ -6,6 +6,7 @@ import DAL.DAO.Implement.StatusDAO;
 import DAL.DAO.Implement.LocalDAO;
 import DAL.DAO.Implement.PersonneDAO;
 import DAL.DAO.Implement.SeanceDAO;
+import DAL.DAO.Implement.SeancePersonneDAO;
 
 public class DAOFactory {
     protected static Singleton single = Singleton.getInstance();
@@ -29,5 +30,8 @@ public class DAOFactory {
 
     public static SeanceDAO getSeanceDAO() {
         return new SeanceDAO(single);
+    }
+    public static SeancePersonneDAO getSeancePersonneDAO() {
+        return new SeancePersonneDAO(single);
     }
 }

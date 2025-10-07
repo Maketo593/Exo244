@@ -2,6 +2,7 @@ import BL.Cours.Cours;
 import BL.Local.Local;
 import BL.Personne.Personne;
 import BL.Seance.Seance;
+import BL.SeancePersonne.SeancePersonne;
 import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
@@ -121,33 +122,50 @@ public class App {
         System.out.println("[" + ortizValerie.getId() +"] " + ortizValerie.getLastName() + " " + ortizValerie.getFirstName() + " - " + ortizValerie.getStatus().getname());
         
         // Création des séances
-        Seance seance1 = new Seance(-1, coursSysteme, local2066,Timestamp.valueOf("2025-09-08 18:00:00"));
-        Seance seance2 = new Seance(-1, coursSysteme, local2066,Timestamp.valueOf("2025-09-15 18:00:00"));
-        Seance seance3 = new Seance(-1, coursSysteme, localPS02,Timestamp.valueOf("2025-09-22 18:00:00"));
-        Seance seance4 = new Seance(-1, coursRéseaux, local3023,Timestamp.valueOf("2025-09-09 18:00:00"));
-        Seance seance5 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-16 18:00:00"));
-        Seance seance6 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-23 18:00:00"));
+        Seance seance080925 = new Seance(-1, coursSysteme, local2066,Timestamp.valueOf("2025-09-08 18:00:00"));
+        Seance seance150925 = new Seance(-1, coursSysteme, local2066,Timestamp.valueOf("2025-09-15 18:00:00"));
+        Seance seance220925 = new Seance(-1, coursSysteme, localPS02,Timestamp.valueOf("2025-09-22 18:00:00"));
+        Seance seance090925 = new Seance(-1, coursRéseaux, local3023,Timestamp.valueOf("2025-09-09 18:00:00"));
+        Seance seance160925 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-16 18:00:00"));
+        Seance seance230925 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-23 18:00:00"));
         // Insertion des séances dans la base de données
-        DAOFactory.getSeanceDAO().create(seance1);
-        DAOFactory.getSeanceDAO().create(seance2);
-        DAOFactory.getSeanceDAO().create(seance3);
-        DAOFactory.getSeanceDAO().create(seance4);
-        DAOFactory.getSeanceDAO().create(seance5);
-        DAOFactory.getSeanceDAO().create(seance6);
+        DAOFactory.getSeanceDAO().create(seance080925);
+        DAOFactory.getSeanceDAO().create(seance150925);
+        DAOFactory.getSeanceDAO().create(seance220925);
+        DAOFactory.getSeanceDAO().create(seance090925);
+        DAOFactory.getSeanceDAO().create(seance160925);
+        DAOFactory.getSeanceDAO().create(seance230925);
         // Récupération des séances depuis la base de données
-        seance1 = DAOFactory.getSeanceDAO().find(seance1);
-        seance2 = DAOFactory.getSeanceDAO().find(seance2);
-        seance3 = DAOFactory.getSeanceDAO().find(seance3);
-        seance4 = DAOFactory.getSeanceDAO().find(seance4);
-        seance5 = DAOFactory.getSeanceDAO().find(seance5);
-        seance6 = DAOFactory.getSeanceDAO().find(seance6);
+        seance080925 = DAOFactory.getSeanceDAO().find(seance080925);
+        seance150925 = DAOFactory.getSeanceDAO().find(seance150925);
+        seance220925 = DAOFactory.getSeanceDAO().find(seance220925);
+        seance090925 = DAOFactory.getSeanceDAO().find(seance090925);
+        seance160925 = DAOFactory.getSeanceDAO().find(seance160925);
+        seance230925 = DAOFactory.getSeanceDAO().find(seance230925);
         // Affichage des séances
         System.out.println("Séances :");
-        System.out.println("[" + seance1.getId() +"] " + seance1.getDate() + " - " + seance1.getLocal().getNumber() + " - " + seance1.getCours().getname());
-        System.out.println("[" + seance2.getId() +"] " + seance2.getDate() + " - " + seance2.getLocal().getNumber() + " - " + seance2.getCours().getname());
-        System.out.println("[" + seance3.getId() +"] " + seance3.getDate() + " - " + seance3.getLocal().getNumber() + " - " + seance3.getCours().getname());
-        System.out.println("[" + seance4.getId() +"] " + seance4.getDate() + " - " + seance4.getLocal().getNumber() + " - " + seance4.getCours().getname());
-        System.out.println("[" + seance5.getId() +"] " + seance5.getDate() + " - " + seance5.getLocal().getNumber() + " - " + seance5.getCours().getname());
-        System.out.println("[" + seance6.getId() +"] " + seance6.getDate() + " - " + seance6.getLocal().getNumber() + " - " + seance6.getCours().getname());
+        System.out.println("[" + seance080925.getId() +"] " + seance080925.getDate() + " - " + seance080925.getLocal().getNumber() + " - " + seance080925.getCours().getname());
+        System.out.println("[" + seance150925.getId() +"] " + seance150925.getDate() + " - " + seance150925.getLocal().getNumber() + " - " + seance150925.getCours().getname());
+        System.out.println("[" + seance220925.getId() +"] " + seance220925.getDate() + " - " + seance220925.getLocal().getNumber() + " - " + seance220925.getCours().getname());
+        System.out.println("[" + seance090925.getId() +"] " + seance090925.getDate() + " - " + seance090925.getLocal().getNumber() + " - " + seance090925.getCours().getname());
+        System.out.println("[" + seance160925.getId() +"] " + seance160925.getDate() + " - " + seance160925.getLocal().getNumber() + " - " + seance160925.getCours().getname());
+        System.out.println("[" + seance230925.getId() +"] " + seance230925.getDate() + " - " + seance230925.getLocal().getNumber() + " - " + seance230925.getCours().getname());
+
+        // Association des personnes aux séances
+        SeancePersonne sp1 = new SeancePersonne(durantRichard, seance080925);
+        SeancePersonne sp2 = new SeancePersonne(durantRichard, seance150925);
+        SeancePersonne sp3 = new SeancePersonne(durantRichard, seance220925);
+        SeancePersonne sp4 = new SeancePersonne(durantRichard, seance090925);
+        SeancePersonne sp5 = new SeancePersonne(ortizValerie, seance090925);
+        SeancePersonne sp6 = new SeancePersonne(durantRichard, seance160925);
+        SeancePersonne sp7 = new SeancePersonne(durantRichard, seance230925);
+        // Insertion des associations dans la base de données
+        DAOFactory.getSeancePersonneDAO().create(sp1);
+        DAOFactory.getSeancePersonneDAO().create(sp2);
+        DAOFactory.getSeancePersonneDAO().create(sp3);
+        DAOFactory.getSeancePersonneDAO().create(sp4);
+        DAOFactory.getSeancePersonneDAO().create(sp5);
+        DAOFactory.getSeancePersonneDAO().create(sp6);
+        DAOFactory.getSeancePersonneDAO().create(sp7);
     }
 }

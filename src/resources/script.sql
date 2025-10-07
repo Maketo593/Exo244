@@ -41,3 +41,13 @@ CREATE TABLE IF NOT EXISTS Seance (
     CONSTRAINT fk_seance_local FOREIGN KEY (id_local) REFERENCES Local(id) ON DELETE SET NULL
 );
 
+CREATE TABLE IF NOT EXISTS Seance_Personne (
+    id_personne INT NOT NULL,
+    id_seance INT NOT NULL,
+    PRIMARY KEY (id_personne, id_seance),
+    FOREIGN KEY (id_personne) REFERENCES Personne(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_seance) REFERENCES Seance(id) ON DELETE CASCADE
+);
+
+
+
