@@ -36,11 +36,11 @@ public class PersonneDAO extends DAO<Personne> {
         Personne p = null;
         try {
             pstmt = single.getConnection().prepareStatement("SELECT id, id_status FROM Personne WHERE nom = ? AND prenom = ?;");
-            pstmt.setString(1, obj.getNom());
-            pstmt.setString(2, obj.getPrenom());
+            pstmt.setString(1, obj.getLastName());
+            pstmt.setString(2, obj.getFirstName());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                p = new Personne(rs.getInt("id"), obj.getNom(), obj.getPrenom(), DAOFactory.getStatusDAO().find(rs.getInt("id_status")));
+                p = new Personne(rs.getInt("id"), obj.getLastName(), obj.getFirstName(), DAOFactory.getStatusDAO().find(rs.getInt("id_status")));
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,8 +74,8 @@ public class PersonneDAO extends DAO<Personne> {
         boolean flag = false;
         try {
             pstmt = single.getConnection().prepareStatement("INSERT INTO Personne (nom, prenom, id_status) VALUES (?, ?, ?);");
-            pstmt.setString(1, obj.getNom());
-            pstmt.setString(2, obj.getPrenom());
+            pstmt.setString(1, obj.getLastName());
+            pstmt.setString(2, obj.getFirstName());
             if (obj.getStatus() != null) {
                 pstmt.setInt(3, obj.getStatus().getId());
             } else {
@@ -98,8 +98,8 @@ public class PersonneDAO extends DAO<Personne> {
         boolean flag = false;
         try {
             pstmt = single.getConnection().prepareStatement("UPDATE Personne SET nom = ?, prenom = ?, id_status = ? WHERE id = ?;");
-            pstmt.setString(1, obj.getNom());
-            pstmt.setString(2, obj.getPrenom());
+            pstmt.setString(1, obj.getLastName());
+            pstmt.setString(2, obj.getFirstName());
             if (obj.getStatus() != null) {
                 pstmt.setInt(3, obj.getStatus().getId());
             } else {

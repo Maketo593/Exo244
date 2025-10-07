@@ -1,5 +1,6 @@
 import BL.Cours.Cours;
 import BL.Local.Local;
+import BL.Personne.Personne;
 import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
@@ -16,6 +17,7 @@ public class App {
         sectionInfo = DAOFactory.getSectionDAO().find(sectionInfo);
         sectionDroit = DAOFactory.getSectionDAO().find(sectionDroit);
         // Affichage des sections
+        System.out.println("Sections :");
         System.out.println("[" + sectionInfo.getId() +"] " + sectionInfo.getname());
         System.out.println("[" + sectionDroit.getId() +"] " + sectionDroit.getname());
 
@@ -38,6 +40,7 @@ public class App {
         coursDroitCivil = DAOFactory.getCoursDAO().find(coursDroitCivil);
         coursDroitcom = DAOFactory.getCoursDAO().find(coursDroitcom);
         // Affichage des cours
+        System.out.println("Cours :");
         System.out.println("[" + coursRéseaux.getId() +"] " + coursRéseaux.getname() + " - Section: " + coursRéseaux.getSection().getname());
         System.out.println("[" + coursSysteme.getId() +"] " + coursSysteme.getname() + " - Section: " + coursSysteme.getSection().getname());
         System.out.println("[" + coursPOO.getId() +"] " + coursPOO.getname() + " - Section: " + coursPOO.getSection().getname());
@@ -57,6 +60,7 @@ public class App {
         statusEnseignant = DAOFactory.getStatusDAO().find(statusEnseignant);
         statusEmpAdmin = DAOFactory.getStatusDAO().find(statusEmpAdmin);
         // Affichage des Status
+        System.out.println("Status :");
         System.out.println("[" + statusEtudiant.getId() +"] " + statusEtudiant.getname());
         System.out.println("[" + statusEnseignant.getId() +"] " + statusEnseignant.getname());
         System.out.println("[" + statusEmpAdmin.getId() +"] " + statusEmpAdmin.getname());
@@ -77,9 +81,40 @@ public class App {
         local2066 = DAOFactory.getLocalDAO().find(local2066);
         local3220 = DAOFactory.getLocalDAO().find(local3220);
         // Affichage des Locaux
+        System.out.println("Locaux :");
         System.out.println("[" + local3023.getId() +"] " + local3023.getNumber() + " - " + local3023.getLocation() + " (" + local3023.getType() + ")");
         System.out.println("[" + localPS02.getId() +"] " + localPS02.getNumber() + " - " + localPS02.getLocation() + " (" + localPS02.getType() + ")");
         System.out.println("[" + local2066.getId() +"] " + local2066.getNumber() + " - " + local2066.getLocation() + " (" + local2066.getType() + ")");
         System.out.println("[" + local3220.getId() +"] " + local3220.getNumber() + " - " + local3220.getLocation() + " (" + local3220.getType() + ")");
+        
+        // Création des Personnes
+        Personne pouletGilles = new Personne(-1, "Gilles", "Poulet", statusEnseignant);
+        Personne godissartEmmanuel = new Personne(-1, "Godissart", "Emmanuel", statusEnseignant);
+        Personne laiValeria = new Personne(-1, "Lai", "Valeria", statusEmpAdmin);
+        Personne mairesseDavid = new Personne(-1, "Mairesse", "David", statusEmpAdmin);
+        Personne durantRichard = new Personne(-1, "Durant", "Richard", statusEtudiant);
+        Personne ortizValerie = new Personne(-1, "Ortiz", "Valerie", statusEtudiant);
+        // Insertion des Personnes dans la base de données
+        DAOFactory.getPersonneDAO().create(pouletGilles);
+        DAOFactory.getPersonneDAO().create(godissartEmmanuel);
+        DAOFactory.getPersonneDAO().create(laiValeria);
+        DAOFactory.getPersonneDAO().create(mairesseDavid);
+        DAOFactory.getPersonneDAO().create(durantRichard);
+        DAOFactory.getPersonneDAO().create(ortizValerie);
+        // Récupération des Personnes depuis la base de données
+        pouletGilles = DAOFactory.getPersonneDAO().find(pouletGilles);
+        godissartEmmanuel = DAOFactory.getPersonneDAO().find(godissartEmmanuel);
+        laiValeria = DAOFactory.getPersonneDAO().find(laiValeria);
+        mairesseDavid = DAOFactory.getPersonneDAO().find(mairesseDavid);
+        durantRichard = DAOFactory.getPersonneDAO().find(durantRichard);
+        ortizValerie = DAOFactory.getPersonneDAO().find(ortizValerie);
+        // Affichage des Personnes
+        System.out.println("Personnes :");
+        System.out.println("[" + pouletGilles.getId() +"] " + pouletGilles.getLastName() + " " + pouletGilles.getFirstName() + " - " + pouletGilles.getStatus().getname());
+        System.out.println("[" + godissartEmmanuel.getId() +"] " + godissartEmmanuel.getLastName() + " " + godissartEmmanuel.getFirstName() + " - " + godissartEmmanuel.getStatus().getname());
+        System.out.println("[" + laiValeria.getId() +"] " + laiValeria.getLastName() + " " + laiValeria.getFirstName() + " - " + laiValeria.getStatus().getname());
+        System.out.println("[" + mairesseDavid.getId() +"] " + mairesseDavid.getLastName() + " " + mairesseDavid.getFirstName() + " - " + mairesseDavid.getStatus().getname());
+        System.out.println("[" + durantRichard.getId() +"] " + durantRichard.getLastName() + " " + durantRichard.getFirstName() + " - " + durantRichard.getStatus().getname());
+        System.out.println("[" + ortizValerie.getId() +"] " + ortizValerie.getLastName() + " " + ortizValerie.getFirstName() + " - " + ortizValerie.getStatus().getname());
     }
 }

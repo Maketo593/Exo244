@@ -3,31 +3,31 @@ import BL.Status.Status;
 
 public class Personne {
     private final int id;
-    private String nom;
-    private String prenom;
+    private String lastName;
+    private String firstName;
     private Status status;
 
-    public Personne(int id, String nom, String prenom, Status status) {
+    public Personne(int id, String lastName, String firstName, Status status) {
         this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
+        this.lastName = lastName;
+        this.firstName = firstName;
         this.status = status;
     }
 
     public int getId() {
         return this.id;
     }
-    public String getNom() {
-        return this.nom;
+    public String getLastName() {
+        return this.lastName;
     }
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
-    public String getPrenom() {
-        return this.prenom;
+    public String getFirstName() {
+        return this.firstName;
     }
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
     public Status getStatus() {
         return this.status;
