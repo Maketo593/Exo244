@@ -17,7 +17,7 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
 
     @Override
     public SeancePersonne find(int id) {
-        throw new UnsupportedOperationException("méthode 'find' non implémentée pour SeancePersonneDAO");
+        throw new UnsupportedOperationException("méthode 'find' de la classe abstraite DAO non implémentée pour SeancePersonneDAO");
     }
 
     @Override
@@ -58,6 +58,44 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
         return spList;
     }
 
+    public ArrayList<SeancePersonne> findAllBySeance(Seance seance) {
+        ArrayList<SeancePersonne> spList = new ArrayList<>();
+        SeancePersonne sp = null;
+        try {
+            pstmt = single.getConnection().prepareStatement("SELECT id_personne FROM Seance_Personne WHERE id_seance = ?;");
+            pstmt.setInt(1, seance.getId());
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                sp = new SeancePersonne(DAOFactory.getPersonneDAO().find(rs.getInt("id_personne")), seance);
+                spList.add(sp);
+            }   
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.close();
+        }
+        return spList;
+    }
+
+    public ArrayList<SeancePersonne> findAllByPersonne(Personne personne) {
+        ArrayList<SeancePersonne> spList = new ArrayList<>();
+        SeancePersonne sp = null;
+        try {
+            pstmt = single.getConnection().prepareStatement("SELECT id_seance FROM Seance_Personne WHERE id_personne = ?;");
+            pstmt.setInt(1, personne.getId());
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                sp = new SeancePersonne(personne, DAOFactory.getSeanceDAO().find(rs.getInt("id_seance")));
+                spList.add(sp);
+            }   
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            this.close();
+        }
+        return spList;
+    }
+
     @Override
     public boolean create(SeancePersonne obj) {
         boolean flag = false;
@@ -79,13 +117,17 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
 
     @Override
     public boolean update(SeancePersonne obj) {
+        throw new UnsupportedOperationException("méthode 'update' de la classe abstraite DAO non implémentée pour SeancePersonneDAO");
+    }
+
+    public boolean update(SeancePersonne oldObj, SeancePersonne newObj) {
         boolean flag = false;
         try {
             pstmt = single.getConnection().prepareStatement("UPDATE Seance_Personne SET id_personne = ?, id_seance = ? WHERE id_personne = ? AND id_seance = ?;");
-            pstmt.setInt(1, obj.getPersonne().getId());
-            pstmt.setInt(2, obj.getSeance().getId());
-            pstmt.setInt(3, obj.getPersonne().getId());
-            pstmt.setInt(4, obj.getSeance().getId());
+            pstmt.setInt(1, newObj.getPersonne().getId());
+            pstmt.setInt(2, newObj.getSeance().getId());
+            pstmt.setInt(3, oldObj.getPersonne().getId());
+            pstmt.setInt(4, oldObj.getSeance().getId());
             pstmt.executeUpdate();
             flag = true;
         } catch (PSQLException e) {
@@ -100,7 +142,7 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("méthode 'delete' non implémentée pour SeancePersonneDAO");
+        throw new UnsupportedOperationException("méthode 'delete' de la classe abstraite DAO non implémentée pour SeancePersonneDAO");
     }
 
     public boolean delete(Personne personne, Seance seance) {
