@@ -73,7 +73,7 @@ public class SeanceDAO extends DAO<Seance> {
     public boolean create(Seance obj) {
         boolean flag = false;
         try {
-            pstmt = single.getConnection().prepareStatement("INSERT INTO Seance (id_cours, id_local, date) VALUES (?, ?, ?);");
+            pstmt = single.getConnection().prepareStatement("INSERT INTO Seance (id_cours, id_local, date) VALUES (?, ?, ?) ON CONFLICT (id_cours, id_local, date) DO NOTHING;");
             pstmt.setInt(1, obj.getCours().getId());
             pstmt.setInt(2, obj.getLocal().getId());
             pstmt.setTimestamp(3, obj.getDate());

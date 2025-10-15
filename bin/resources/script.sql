@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS Seance (
     id_cours INTEGER,
     id_local INTEGER,
     date TIMESTAMP,
+    CONSTRAINT unique_seance UNIQUE (id_cours, id_local, date),
     CONSTRAINT fk_seance_cours FOREIGN KEY (id_cours) REFERENCES Cours(id) ON DELETE SET NULL,
     CONSTRAINT fk_seance_local FOREIGN KEY (id_local) REFERENCES Local(id) ON DELETE SET NULL
 );

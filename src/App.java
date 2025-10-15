@@ -7,6 +7,7 @@ import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 
 public class App {
@@ -138,8 +139,9 @@ public class App {
         seance160925 = DAOFactory.getSeanceDAO().find(seance160925);
         seance230925 = DAOFactory.getSeanceDAO().find(seance230925);
         // Affichage des séances
+        ArrayList<Seance> seances = DAOFactory.getSeanceDAO().findAll();
         System.out.println("Séances :");
-        for (Seance seance : DAOFactory.getSeanceDAO().findAll()) {
+        for (Seance seance : seances) {
             System.out.println("[" + seance.getId() +"] " + seance.getDate() + " - " + seance.getLocal().getNumber() + " - " + seance.getCours().getname());
         }
         
