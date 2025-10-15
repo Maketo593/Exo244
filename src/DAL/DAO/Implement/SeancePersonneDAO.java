@@ -29,7 +29,7 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
             pstmt.setInt(2, obj.getSeance().getId());
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                sp = new SeancePersonne(obj.getPersonne(), obj.getSeance());
+                sp = obj;
             }   
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,12 +145,12 @@ public class SeancePersonneDAO extends DAO<SeancePersonne> {
         throw new UnsupportedOperationException("méthode 'delete' de la classe abstraite DAO non implémentée pour SeancePersonneDAO");
     }
 
-    public boolean delete(Personne personne, Seance seance) {
+    public boolean delete(SeancePersonne obj) {
         boolean flag = false;
         try {
             pstmt = single.getConnection().prepareStatement("DELETE FROM Seance_Personne WHERE id_personne = ? AND id_seance = ?;");
-            pstmt.setInt(1, personne.getId());
-            pstmt.setInt(2, seance.getId());
+            pstmt.setInt(1, obj.getPersonne().getId());
+            pstmt.setInt(2, obj.getSeance().getId());
             pstmt.executeUpdate();
             flag = true;
         } catch (PSQLException e) {
