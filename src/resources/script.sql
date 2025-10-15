@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS Seance_Personne (
     FOREIGN KEY (id_seance) REFERENCES Seance(id) ON DELETE CASCADE
 );
 
-CREATE TABE IF NOT EXISTS Cours_Personne (
+CREATE TABLE IF NOT EXISTS Cours_Personne (
     id_personne INT NOT NULL,
     id_cours INT NOT NULL,
     annee_academique DATE,

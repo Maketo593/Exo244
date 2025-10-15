@@ -1,6 +1,7 @@
 package DAL.DAO;
 import DAL.Singleton.Singleton;
 import DAL.DAO.Implement.CoursDAO;
+import DAL.DAO.Implement.CoursPersonneDAO;
 import DAL.DAO.Implement.SectionDAO;
 import DAL.DAO.Implement.StatusDAO;
 import DAL.DAO.Implement.LocalDAO;
@@ -33,5 +34,8 @@ public class DAOFactory {
     }
     public static SeancePersonneDAO getSeancePersonneDAO() {
         return new SeancePersonneDAO(single);
+    }
+    public static CoursPersonneDAO getCoursPersonneDAO() {
+        return new CoursPersonneDAO(single);
     }
 }
