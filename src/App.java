@@ -1,4 +1,5 @@
 import BL.Cours.Cours;
+import BL.Cours_Personne.CoursPersonne;
 import BL.Local.Local;
 import BL.Personne.Personne;
 import BL.Seance.Seance;
@@ -8,6 +9,7 @@ import BL.Status.Status;
 import DAL.DAO.DAOFactory;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 
 public class App {
@@ -138,13 +140,17 @@ public class App {
         seance090925 = DAOFactory.getSeanceDAO().find(seance090925);
         seance160925 = DAOFactory.getSeanceDAO().find(seance160925);
         seance230925 = DAOFactory.getSeanceDAO().find(seance230925);
-        // Affichage des séances
-        ArrayList<Seance> seances = DAOFactory.getSeanceDAO().findAll();
-        System.out.println("Séances :");
-        for (Seance seance : seances) {
-            System.out.println("[" + seance.getId() +"] " + seance.getDate() + " - " + seance.getLocal().getNumber() + " - " + seance.getCours().getname());
-        }
+
         
+        // Association des personnes aux Cours
+        CoursPersonne cp1 = new CoursPersonne(coursSysteme, durantRichard, LocalDate.of(2025, 9, 1));
+        CoursPersonne cp2 = new CoursPersonne(coursRéseaux, durantRichard, LocalDate.of(2025, 9, 1));
+        CoursPersonne cp3 = new CoursPersonne(coursRéseaux, ortizValerie, LocalDate.of(2025, 9, 1));
+        // Insertion des associations dans la base de données
+        DAOFactory.getCoursPersonneDAO().create(cp1);
+        DAOFactory.getCoursPersonneDAO().create(cp2);
+        DAOFactory.getCoursPersonneDAO().create(cp3);
+
         // Association des personnes aux séances
         SeancePersonne sp1 = new SeancePersonne(durantRichard, seance080925);
         SeancePersonne sp2 = new SeancePersonne(durantRichard, seance150925);
@@ -161,5 +167,16 @@ public class App {
         DAOFactory.getSeancePersonneDAO().create(sp5);
         DAOFactory.getSeancePersonneDAO().create(sp6);
         DAOFactory.getSeancePersonneDAO().create(sp7);
+
+        // Affichage des séances
+        ArrayList<Seance> seances = DAOFactory.getSeanceDAO().findAll();
+        System.out.println("Séances :");
+        for (Seance seance : seances) {
+            ArrayList<SeancePersonne> participants = DAOFactory.getSeancePersonneDAO().findAllBySeance(seance);
+            for(SeancePersonne sp : participants) {
+                System.out.println("[" + sp.getSeance().getId() +"] " + sp.getSeance().getDate() + " - " + sp.getSeance().getLocal().getNumber() + " - " + sp.getSeance().getCours().getname() + " - " + sp.getPersonne().getLastName() + " " + sp.getPersonne().getFirstName());
+            }
+            //System.out.println("[" + seance.getId() +"] " + seance.getDate() + " - " + seance.getLocal().getNumber() + " - " + seance.getCours().getname());
+        }
     }
 }
