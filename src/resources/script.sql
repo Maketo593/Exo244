@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS Personne (
     nom VARCHAR(15),
     prenom VARCHAR(15),
     id_status INTEGER,
+    CONSTRAINT unique_personne UNIQUE (nom, prenom, id_status),
     CONSTRAINT fk_status FOREIGN KEY (id_status) REFERENCES Status(id) ON DELETE SET NULL
 );
 

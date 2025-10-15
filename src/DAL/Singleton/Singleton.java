@@ -15,10 +15,11 @@ public class Singleton {
     private Singleton() {
         try {
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connecté à la base de donnée: " + url + db);
+            System.out.println("Connecté à la base de donnée: " + url);
             DBInitializer.initDB(this, db);
             this.close();
             conn = DriverManager.getConnection(url + db, user, password);
+            System.out.println("Connecté à la base de donnée: " + url + db);
             DBInitializer.initTables(this);
         } catch (SQLException e) {
             e.printStackTrace();
