@@ -7,6 +7,14 @@ import BL.SeancePersonne.SeancePersonne;
 import BL.Section.Section;
 import BL.Status.Status;
 import DAL.DAO.DAOFactory;
+import DAL.DAO.Implement.CoursDAO;
+import DAL.DAO.Implement.CoursPersonneDAO;
+import DAL.DAO.Implement.LocalDAO;
+import DAL.DAO.Implement.PersonneDAO;
+import DAL.DAO.Implement.SeanceDAO;
+import DAL.DAO.Implement.SeancePersonneDAO;
+import DAL.DAO.Implement.SectionDAO;
+import DAL.DAO.Implement.StatusDAO;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.time.LocalDate;
@@ -18,14 +26,15 @@ public class App {
         Section sectionInfo = new Section(-1,"Informatique de gestion");
         Section sectionDroit = new Section(-1,"Droit");
         // Insertion des sections dans la base de données
-        DAOFactory.getSectionDAO().create(sectionInfo);
-        DAOFactory.getSectionDAO().create(sectionDroit);
+        SectionDAO sectionDAO =  DAOFactory.getSectionDAO();
+        sectionDAO.create(sectionInfo);
+        sectionDAO.create(sectionDroit);
         // Récupération des sections depuis la base de données
-        sectionInfo = DAOFactory.getSectionDAO().find(sectionInfo);
-        sectionDroit = DAOFactory.getSectionDAO().find(sectionDroit);
+        sectionInfo = sectionDAO.find(sectionInfo);
+        sectionDroit = sectionDAO.find(sectionDroit);
         // Affichage des sections
         System.out.println("Sections :");
-        for (Section section : DAOFactory.getSectionDAO().findAll()) {
+        for (Section section : sectionDAO.findAll()) {
             System.out.println("[" + section.getId() +"] " + section.getname());  
         }
 
@@ -36,20 +45,21 @@ public class App {
         Cours coursDroitCivil = new Cours(-1,"Droit civil",sectionDroit);
         Cours coursDroitcom = new Cours(-1,"Droit commercial",sectionDroit);
         // Insertion des cours dans la base de données
-        DAOFactory.getCoursDAO().create(coursRéseaux);
-        DAOFactory.getCoursDAO().create(coursSysteme);
-        DAOFactory.getCoursDAO().create(coursPOO);
-        DAOFactory.getCoursDAO().create(coursDroitCivil);
-        DAOFactory.getCoursDAO().create(coursDroitcom);
+        CoursDAO coursDAO = DAOFactory.getCoursDAO();
+        coursDAO.create(coursRéseaux);
+        coursDAO.create(coursSysteme);
+        coursDAO.create(coursPOO);
+        coursDAO.create(coursDroitCivil);
+        coursDAO.create(coursDroitcom);
         // Récupération des cours depuis la base de données
-        coursRéseaux = DAOFactory.getCoursDAO().find(coursRéseaux);
-        coursSysteme = DAOFactory.getCoursDAO().find(coursSysteme);
-        coursPOO = DAOFactory.getCoursDAO().find(coursPOO);
-        coursDroitCivil = DAOFactory.getCoursDAO().find(coursDroitCivil);
-        coursDroitcom = DAOFactory.getCoursDAO().find(coursDroitcom);
+        coursRéseaux = coursDAO.find(coursRéseaux);
+        coursSysteme = coursDAO.find(coursSysteme);
+        coursPOO = coursDAO.find(coursPOO);
+        coursDroitCivil = coursDAO.find(coursDroitCivil);
+        coursDroitcom = coursDAO.find(coursDroitcom);
         // Affichage des cours
         System.out.println("Cours :");
-        for (Cours cours : DAOFactory.getCoursDAO().findAll()) {
+        for (Cours cours : coursDAO.findAll()) {
             System.out.println("[" + cours.getId() +"] " + cours.getname() + " - Section: " + cours.getSection().getname());
         }
 
@@ -58,16 +68,17 @@ public class App {
         Status statusEnseignant = new Status(-1,"Charge de cours");
         Status statusEmpAdmin = new Status(-1,"Employe administratif");
         // Insertion des Status dans la base de données
-        DAOFactory.getStatusDAO().create(statusEtudiant);
-        DAOFactory.getStatusDAO().create(statusEnseignant);
-        DAOFactory.getStatusDAO().create(statusEmpAdmin);
+        StatusDAO statusDAO =  DAOFactory.getStatusDAO();
+        statusDAO.create(statusEtudiant);
+        statusDAO.create(statusEnseignant);
+        statusDAO.create(statusEmpAdmin);
         // Récupération des Status depuis la base de données
-        statusEtudiant = DAOFactory.getStatusDAO().find(statusEtudiant);
-        statusEnseignant = DAOFactory.getStatusDAO().find(statusEnseignant);
-        statusEmpAdmin = DAOFactory.getStatusDAO().find(statusEmpAdmin);
+        statusEtudiant = statusDAO.find(statusEtudiant);
+        statusEnseignant = statusDAO.find(statusEnseignant);
+        statusEmpAdmin = statusDAO.find(statusEmpAdmin);
         // Affichage des Status
         System.out.println("Status :");
-        for (Status status : DAOFactory.getStatusDAO().findAll()) {
+        for (Status status : statusDAO.findAll()) {
             System.out.println("[" + status.getId() +"] " + status.getname());
         }
 
@@ -77,18 +88,19 @@ public class App {
         Local local2066 = new Local(-1,"2066","HelHa","INF");
         Local local3220 = new Local(-1,"3220","HelHa","STD");
         // Insertion des Locaux dans la base de données
-        DAOFactory.getLocalDAO().create(local3023);
-        DAOFactory.getLocalDAO().create(localPS02);
-        DAOFactory.getLocalDAO().create(local2066);
-        DAOFactory.getLocalDAO().create(local3220);
+        LocalDAO localDAO = DAOFactory.getLocalDAO();
+        localDAO.create(local3023);
+        localDAO.create(localPS02);
+        localDAO.create(local2066);
+        localDAO.create(local3220);
         // Récupération des Locaux depuis la base de données
-        local3023 = DAOFactory.getLocalDAO().find(local3023);
-        localPS02 = DAOFactory.getLocalDAO().find(localPS02);
-        local2066 = DAOFactory.getLocalDAO().find(local2066);
-        local3220 = DAOFactory.getLocalDAO().find(local3220);
+        local3023 = localDAO.find(local3023);
+        localPS02 = localDAO.find(localPS02);
+        local2066 = localDAO.find(local2066);
+        local3220 = localDAO.find(local3220);
         // Affichage des Locaux
         System.out.println("Locaux :");
-        for (Local local : DAOFactory.getLocalDAO().findAll()) {
+        for (Local local : localDAO.findAll()) {
             System.out.println("[" + local.getId() +"] " + local.getNumber() + " - " + local.getLocation() + " (" + local.getType() + ")");
         }
         
@@ -100,22 +112,23 @@ public class App {
         Personne durantRichard = new Personne(-1, "Durant", "Richard", statusEtudiant);
         Personne ortizValerie = new Personne(-1, "Ortiz", "Valerie", statusEtudiant);
         // Insertion des Personnes dans la base de données
-        DAOFactory.getPersonneDAO().create(pouletGilles);
-        DAOFactory.getPersonneDAO().create(godissartEmmanuel);
-        DAOFactory.getPersonneDAO().create(laiValeria);
-        DAOFactory.getPersonneDAO().create(mairesseDavid);
-        DAOFactory.getPersonneDAO().create(durantRichard);
-        DAOFactory.getPersonneDAO().create(ortizValerie);
+        PersonneDAO personneDAO = DAOFactory.getPersonneDAO();
+        personneDAO.create(pouletGilles);
+        personneDAO.create(godissartEmmanuel);
+        personneDAO.create(laiValeria);
+        personneDAO.create(mairesseDavid);
+        personneDAO.create(durantRichard);
+        personneDAO.create(ortizValerie);
         // Récupération des Personnes depuis la base de données
-        pouletGilles = DAOFactory.getPersonneDAO().find(pouletGilles);
-        godissartEmmanuel = DAOFactory.getPersonneDAO().find(godissartEmmanuel);
-        laiValeria = DAOFactory.getPersonneDAO().find(laiValeria);
-        mairesseDavid = DAOFactory.getPersonneDAO().find(mairesseDavid);
-        durantRichard = DAOFactory.getPersonneDAO().find(durantRichard);
-        ortizValerie = DAOFactory.getPersonneDAO().find(ortizValerie);
+        pouletGilles = personneDAO.find(pouletGilles);
+        godissartEmmanuel = personneDAO.find(godissartEmmanuel);
+        laiValeria = personneDAO.find(laiValeria);
+        mairesseDavid = personneDAO.find(mairesseDavid);
+        durantRichard = personneDAO.find(durantRichard);
+        ortizValerie = personneDAO.find(ortizValerie);
         // Affichage des Personnes
         System.out.println("Personnes :");
-        for (Personne personne : DAOFactory.getPersonneDAO().findAll()) {
+        for (Personne personne : personneDAO.findAll()) {
             System.out.println("[" + personne.getId() +"] " + personne.getLastName() + " " + personne.getFirstName() + " - " + personne.getStatus().getname());
         }
         
@@ -127,19 +140,20 @@ public class App {
         Seance seance160925 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-16 18:00:00"));
         Seance seance230925 = new Seance(-1, coursRéseaux, localPS02,Timestamp.valueOf("2025-09-23 18:00:00"));
         // Insertion des séances dans la base de données
-        DAOFactory.getSeanceDAO().create(seance080925);
-        DAOFactory.getSeanceDAO().create(seance150925);
-        DAOFactory.getSeanceDAO().create(seance220925);
-        DAOFactory.getSeanceDAO().create(seance090925);
-        DAOFactory.getSeanceDAO().create(seance160925);
-        DAOFactory.getSeanceDAO().create(seance230925);
+        SeanceDAO seanceDAO = DAOFactory.getSeanceDAO();
+        seanceDAO.create(seance080925);
+        seanceDAO.create(seance150925);
+        seanceDAO.create(seance220925);
+        seanceDAO.create(seance090925);
+        seanceDAO.create(seance160925);
+        seanceDAO.create(seance230925);
         // Récupération des séances depuis la base de données
-        seance080925 = DAOFactory.getSeanceDAO().find(seance080925);
-        seance150925 = DAOFactory.getSeanceDAO().find(seance150925);
-        seance220925 = DAOFactory.getSeanceDAO().find(seance220925);
-        seance090925 = DAOFactory.getSeanceDAO().find(seance090925);
-        seance160925 = DAOFactory.getSeanceDAO().find(seance160925);
-        seance230925 = DAOFactory.getSeanceDAO().find(seance230925);
+        seance080925 = seanceDAO.find(seance080925);
+        seance150925 = seanceDAO.find(seance150925);
+        seance220925 = seanceDAO.find(seance220925);
+        seance090925 = seanceDAO.find(seance090925);
+        seance160925 = seanceDAO.find(seance160925);
+        seance230925 = seanceDAO.find(seance230925);
 
         
         // Association des personnes aux Cours
@@ -147,9 +161,10 @@ public class App {
         CoursPersonne cp2 = new CoursPersonne(coursRéseaux, durantRichard, LocalDate.of(2025, 9, 1));
         CoursPersonne cp3 = new CoursPersonne(coursRéseaux, ortizValerie, LocalDate.of(2025, 9, 1));
         // Insertion des associations dans la base de données
-        DAOFactory.getCoursPersonneDAO().create(cp1);
-        DAOFactory.getCoursPersonneDAO().create(cp2);
-        DAOFactory.getCoursPersonneDAO().create(cp3);
+        CoursPersonneDAO coursPersonneDAO = DAOFactory.getCoursPersonneDAO();
+        coursPersonneDAO.create(cp1);
+        coursPersonneDAO.create(cp2);
+        coursPersonneDAO.create(cp3);
 
         // Association des personnes aux séances
         SeancePersonne sp1 = new SeancePersonne(durantRichard, seance080925);
@@ -160,23 +175,23 @@ public class App {
         SeancePersonne sp6 = new SeancePersonne(durantRichard, seance160925);
         SeancePersonne sp7 = new SeancePersonne(durantRichard, seance230925);
         // Insertion des associations dans la base de données
-        DAOFactory.getSeancePersonneDAO().create(sp1);
-        DAOFactory.getSeancePersonneDAO().create(sp2);
-        DAOFactory.getSeancePersonneDAO().create(sp3);
-        DAOFactory.getSeancePersonneDAO().create(sp4);
-        DAOFactory.getSeancePersonneDAO().create(sp5);
-        DAOFactory.getSeancePersonneDAO().create(sp6);
-        DAOFactory.getSeancePersonneDAO().create(sp7);
+        SeancePersonneDAO seancePersonneDAO = DAOFactory.getSeancePersonneDAO();
+        seancePersonneDAO.create(sp1);
+        seancePersonneDAO.create(sp2);
+        seancePersonneDAO.create(sp3);
+        seancePersonneDAO.create(sp4);
+        seancePersonneDAO.create(sp5);
+        seancePersonneDAO.create(sp6);
+        seancePersonneDAO.create(sp7);
 
         // Affichage des séances
-        ArrayList<Seance> seances = DAOFactory.getSeanceDAO().findAll();
+        ArrayList<Seance> seances = seanceDAO.findAll();
         System.out.println("Séances :");
         for (Seance seance : seances) {
-            ArrayList<SeancePersonne> participants = DAOFactory.getSeancePersonneDAO().findAllBySeance(seance);
+            ArrayList<SeancePersonne> participants = seancePersonneDAO.findAllBySeance(seance);
             for(SeancePersonne sp : participants) {
                 System.out.println("[" + sp.getSeance().getId() +"] " + sp.getSeance().getDate() + " - " + sp.getSeance().getLocal().getNumber() + " - " + sp.getSeance().getCours().getname() + " - " + sp.getPersonne().getLastName() + " " + sp.getPersonne().getFirstName());
             }
-            //System.out.println("[" + seance.getId() +"] " + seance.getDate() + " - " + seance.getLocal().getNumber() + " - " + seance.getCours().getname());
         }
     }
 }
